@@ -1,7 +1,19 @@
-## Put comments here that give an overall description of what your
-## functions do
+## These functions create a special "matrix" object, which is actually a list
+## with functions to get & set the matrix value, and functions to get & set the 
+## inverse of the matrix. The cacheSolve funtion will return a cached version
+## of the inverse if it has already been calculated.
+## 
+## Example usage:
+## 
+## matr <- makeCacheMatrix()
+## matr$set(matrix(c(3,4,2,5,2,4,5,2,3), nrow=3))
+## matr$get()
+## 
+## cacheSolve(matr)    # --> calculate inverse and return
+## cacheSolve(matr)    # --> return cached matrix
 
-## Write a short comment describing this function
+## This function creates the special "matrix" object. It returns a list of
+## functions, which can be used to manipulate the matrix and its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
   
@@ -20,7 +32,10 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+## This function takes a "matrix" created by the makeCacheMatrix function and 
+## calculates the inverse, caching and then returning the result. If a cached
+## version is already available, then it prints a message and returns the cached
+## matrix.
 
 cacheSolve <- function(x, ...) {
   
@@ -35,23 +50,4 @@ cacheSolve <- function(x, ...) {
   x$setinv(i)
   i
 }
-
-# create matrix
-matr <- makeCacheMatrix()
-
-# test accessor and mutator functions
-matr$set(matrix(c(3,4,2,5,2,4,5,2,3), nrow=3))
-matr$get()
-
-# first call to cacheSolve will calculate, cache, and return the inverse
-cacheSolve(matr)
-
-# additional calls will return the cached value...
-cacheSolve(matr)
-
-# ... unless the vector has changed
-matr$set(matrix(c(3,4,7,5,2,2,5,2,3), nrow=3))
-
-cacheSolve(matr)  # recalculate
-cacheSolve(matr)  # return cached value
 
